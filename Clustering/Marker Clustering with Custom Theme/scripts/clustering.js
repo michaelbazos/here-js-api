@@ -29,6 +29,9 @@ function startClustering(map, ui, getBubbleContent, data) {
         },
         theme: CUSTOM_THEME
     });
+    // Note that we attach the event listener to the cluster provider, and not to
+    // the individual markers
+    clusteredDataProvider.addEventListener('tap', onMarkerClick);
 
     // Create a layer that will consume objects from our clustering provider
     var layer = new H.map.layer.ObjectLayer(clusteredDataProvider);
@@ -62,9 +65,7 @@ var CUSTOM_THEME = {
 
         // Link data from the random point from the cluster to the marker,
         // to make it accessible inside onMarkerClick
-        clusterMarker.setData(data)
-        // Show a bubble on marker click/tap
-            .addEventListener('tap', onMarkerClick);
+        clusterMarker.setData(data);
 
         return clusterMarker;
     },
@@ -85,9 +86,6 @@ var CUSTOM_THEME = {
         // Link a data from the point to the marker
         // to make it accessible inside onMarkerClick
         noiseMarker.setData(data);
-
-        // Show a bubble on marker click/tap
-        noiseMarker.addEventListener('tap', onMarkerClick);
 
         return noiseMarker;
     }
@@ -112,13 +110,13 @@ function getRandomDataPoint(cluster) {
 /**
  * CLICK/TAP event handler for our markers. That marker can represent either a single photo or
  * a cluster (group of photos)
- * @this {H.map.Marker}
+ * @param {H.mapevents.Event} e The event object
  */
-function onMarkerClick() {
+function onMarkerClick(e) {
     // Get position of the "clicked" marker
-    var position = this.getPosition(),
+    var position = e.target.getPosition(),
         // Get the data associated with that marker
-        data = this.getData(),
+        data = e.target.getData(),
         // Merge default template with the data and get HTML
         bubbleContent = getBubbleContent(data),
         bubble = onMarkerClick.bubble;
