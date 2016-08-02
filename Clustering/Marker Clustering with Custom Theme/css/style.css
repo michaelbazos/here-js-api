@@ -1,0 +1,35 @@
+.bubble {
+    font-size: 11px;
+    line-height: 15px;
+    color: white;
+}
+.bubble-image {
+    width: 300px;
+    height: 100px;
+    background-size: cover;
+    background-position: center;
+    display: block;
+}
+.bubble-logo {
+    float: left;
+    margin-right: 1em;
+    margin-bottom: 4px;
+}
+.bubble-footer {
+    display: table;
+}
+.bubble-desc {
+    display: table-cell;
+    vertical-align: middle;
+}
+.bubble a {
+    text-decoration: none;
+    color: white !important;
+}
+.bubble a:hover {
+    text-decoration: underline;
+}
+
+.bubble hr {
+    margin: 5px 0px;
+}
